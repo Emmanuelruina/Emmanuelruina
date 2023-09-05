@@ -1,10 +1,23 @@
-- 👋 Hi, I’m @Emmanuelruina
-- 👀 I’m interested in ...
-- 🌱 I’m currently learning ...
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ...
+import { bsc } from 'wagmi/chains'
+import { publicProvider } from 'wagmi/providers/public'
+import {
+  configureChains,
+  createClient,
+  WagmiConfig,
+} from 'wagmi'
+const { provider: wagmiProvider, webSocketProvider } = configureChains([bsc], [publicProvider()])
+const connector = new BinanceIDConnector({
+  options: { chainId: 56, rpc: { 56: 'https://bsc-dataseed.binance.org/' } },
+})
 
-<!---
-Emmanuelruina/Emmanuelruina is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->Emmanuelruina/README.md 
+const client = createClient({
+  provider: wagmiProvider,
+  webSocketProvider,
+})
+export default function App() {
+  return (
+    <WagmiConfig client={client}>
+      <Home />
+    </WagmiConfig>
+  )
+}
